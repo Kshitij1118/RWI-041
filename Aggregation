@@ -1,0 +1,113 @@
+aggregation:
+
+If a class have an entity reference, it is known as Aggregation. Aggregation represents HAS-A relationship.
+Consider a situation, Employee object contains many informations such as id, name, emailId etc. It contains one more object named address, which contains its own informations such as city, state, country, zipcode etc.
+
+
+Aggregation.java
+
+public class Main
+{
+    int id;
+    String name;
+    Address address;
+    
+    public Main(int id, String name,Address address){
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+    
+    void display(){
+        System.out.println(id+""+name);
+        System.out.println(address.city+""+address.state+""+address.country);
+    }
+    
+    
+    public static void main(String[] args) {
+        Address address1=new Address("Dwarka sec 12","Delhi", "india");
+        Address address2=new Address("Dwarka Mor","Delhi", "india");
+        
+        
+        Main i=new Main(31,"Kshitij", "india");
+        Main i2=new Main(85,"ankit", "india");
+        
+        i.display();
+        i2.display();
+        
+    }
+}
+
+
+
+Address.java
+
+public class Address {  
+String city,state,country;  
+  
+public Address(String city, String state, String country) {  
+    this.city = city;  
+    this.state = state;  
+    this.country = country;  
+}  
+  
+} 
+
+
+Sir Example:
+
+package com.practise;
+class Student {
+	private int sid;
+	private String sname;
+	public Student(int sid, String sname) {
+		super();
+		this.sid = sid;
+		this.sname = sname;
+	}
+	public int getSid() {
+		return sid;
+	}
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}	
+}
+class Department{
+	private String dname;
+	 private Student student;
+	public Department(String dname, Student student) {
+		super();
+		this.dname = dname;
+		this.student = student;
+	}
+	 
+	 void show()
+	 {
+		 System.out.println("Department Name  ="+ dname +" \n" + "Student ="+student.getSid()+" "+ student.getSname());
+	 }
+	 
+}
+public class Aggregation {
+
+	public static void main(String[] args) {
+
+		Student s1=new Student(121, "Sneha");
+		Student s2=new Student(122, "Sakshi");
+		
+		Department d=new Department("Computer Science", s1);
+		Department d1=new Department("polytechnic", s2);
+		d.show();
+		d1.show();
+		
+		
+		
+
+	}
+
+}
