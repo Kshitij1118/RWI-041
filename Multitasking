@@ -1,0 +1,97 @@
+Multitasking refers to the ability of a system to execute multiple tasks simultaneously or in overlapping time intervals. 
+It can be achieved through two approaches: multitasking using multiple processes or multitasking using multiple threads. Java primarily focuses on multitasking using threads.
+
+
+Threads in Java :
+A thread is a lightweight unit of execution that operates independently and shares the same memory space with other threads within a process. Java provides comprehensive support for creating and managing threads through the java.lang.Thread class.
+
+
+class MyThread extends Thread {  
+    public void run() {  
+        System.out.println("Thread is running.");  
+    }  
+    public static void main(String[] args) {  
+        MyThread thread = new MyThread();  
+        thread.start();  
+    }  
+}  
+
+
+
+
+Runnable Interface Implementation :
+
+class MyRunnable implements Runnable {  
+    public void run() {  
+        System.out.println("Thread is running.");  
+    }  
+    public static void main(String[] args) {  
+        Thread thread = new Thread(new MyRunnable());  
+        thread.start();  
+    }  
+}  
+
+
+
+
+Thread Synchronization : 
+
+class Counter {  
+    private int count = 0;  
+    public synchronized void increment() {  
+        count++;  
+    }  
+    public int getCount() {  
+        return count;  
+    }  
+}  
+class IncrementThread extends Thread {  
+    private Counter counter;  
+    public IncrementThread(Counter counter) {  
+        this.counter = counter;  
+    }  
+    public void run() {  
+        for (int i = 0; i < 1000; i++) {  
+            counter.increment();  
+        }  
+    }  
+}  
+public class SynchronizationDemo {  
+    public static void main(String[] args) throws InterruptedException {  
+        Counter counter = new Counter();  
+        IncrementThread thread1 = new IncrementThread(counter);  
+        IncrementThread thread2 = new IncrementThread(counter);  
+        thread1.start();  
+        thread2.start();  
+        thread1.join();  
+        thread2.join();  
+        System.out.println("Counter value: " + counter.getCount());  
+    }  
+}  
+
+
+
+
+Thread Pooling
+
+import java.util.concurrent.ExecutorService;  
+import java.util.concurrent.Executors;  
+class Task implements Runnable {  
+    private int id;  
+    public Task(int id) {  
+        this.id = id;  
+    }  
+    public void run() {  
+        System.out.println("Task " + id + " is executing.");  
+    }  
+}  
+public class ThreadPoolDemo {  
+    public static void main(String[] args) {  
+        ExecutorService executor = Executors.newFixedThreadPool(3);  
+        for (int i = 0; i < 5; i++) {  
+            Task task = new Task(i);  
+            executor.execute(task);  
+        }  
+        executor.shutdown();  
+    }  
+}  
